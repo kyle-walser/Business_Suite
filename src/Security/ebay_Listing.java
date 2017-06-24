@@ -34,7 +34,6 @@ public class ebay_Listing extends JFrame {
 	private JTextField txtItem_Cost;
 	private JTextField txtWeight;
 	private JTextField txtCategory;
-	private JTextField txtMethod;
 	private JTextField txtAskingPrice;
 	private JTextField txtBoughtDate;
 
@@ -89,6 +88,11 @@ public class ebay_Listing extends JFrame {
 		cmboCond.setBounds(111, 83, 141, 20);
 		contentPane.add(cmboCond);
 		
+		JComboBox cmboMethod = new JComboBox();
+		cmboMethod.setModel(new DefaultComboBoxModel(new String[] {"Choose....", "Retail Arbitrage", "Online Arbitrage", "Thrifting", "Book Sale", "Non-retail", "Other"}));
+		cmboMethod.setBounds(111, 213, 86, 20);
+		contentPane.add(cmboMethod);
+		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,19 +117,30 @@ public class ebay_Listing extends JFrame {
 					if (cmboCond.getSelectedItem() != "Choose..."){
 						if(txtItem_Cost.getText().length() != 0){
 							if(txtWeight.getText().length() != 0){
-								if(txtAskingPrice.getText().length() != 0){
-									if(txtBoughtDate.getText().length() != 0){
-										if (txtBoughtDate.getText().length() == 10){
-											
-											System.out.println(checkDate(txtBoughtDate.getText()));
+								if (cmboMethod.getSelectedItem() !=  "Choose...."){
+									if(txtAskingPrice.getText().length() != 0){
+										if(txtBoughtDate.getText().length() != 0){
+											if (txtBoughtDate.getText().length() == 10){
+												
+												try {
+													Double.parseDouble(txtAskingPrice.getText());
+													System.out.println(txtAskingPrice.getText());
+											    } catch (NumberFormatException e1) {
+											        JOptionPane.showMessageDialog(null, "bad number");
+											        txtAskingPrice.requestFocus();
+											    }
+												//System.out.println(checkDate(txtBoughtDate.getText()));
+											}else{
+												JOptionPane.showMessageDialog(null, "Please enter date in format 'xx/xx/xxxx", "Date Format Error" , JOptionPane.ERROR_MESSAGE);
+											}
 										}else{
-											JOptionPane.showMessageDialog(null, "Please enter date in format 'xx/xx/xxxx", "Date Format Error" , JOptionPane.ERROR_MESSAGE);
+											JOptionPane.showMessageDialog(null, "Item bought date can't be blank", "Bought Date Blank Error" , JOptionPane.ERROR_MESSAGE);
 										}
 									}else{
-										JOptionPane.showMessageDialog(null, "Item bought date can't be blank", "Bought Date Blank Error" , JOptionPane.ERROR_MESSAGE);
+										JOptionPane.showMessageDialog(null, "Item asking price can't be blank", "Asking Price Blank Error" , JOptionPane.ERROR_MESSAGE);
 									}
 								}else{
-									JOptionPane.showMessageDialog(null, "Item asking price can't be blank", "Asking Price Blank Error" , JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(null, "Please select a sourcing method", "Method can't be blank" , JOptionPane.ERROR_MESSAGE);
 								}
 							}else{
 								JOptionPane.showMessageDialog(null, "Item weight can't be blank", "Weight Blank Error" , JOptionPane.ERROR_MESSAGE);
@@ -192,11 +207,6 @@ public class ebay_Listing extends JFrame {
 		lblNewLabel_3.setBounds(29, 216, 46, 14);
 		contentPane.add(lblNewLabel_3);
 		
-		txtMethod = new JTextField();
-		txtMethod.setBounds(111, 213, 86, 20);
-		contentPane.add(txtMethod);
-		txtMethod.setColumns(10);
-		
 		JLabel lblAsking = new JLabel("Asking");
 		lblAsking.setBounds(29, 247, 46, 14);
 		contentPane.add(lblAsking);
@@ -214,6 +224,8 @@ public class ebay_Listing extends JFrame {
 		txtBoughtDate.setBounds(111, 274, 86, 20);
 		contentPane.add(txtBoughtDate);
 		txtBoughtDate.setColumns(10);
+		
+		
 	}
 	public String checkDate(String in){
 		
