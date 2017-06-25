@@ -116,6 +116,7 @@ public class ebay_Listing extends JFrame {
 					JOptionPane.showMessageDialog(null,"File does not exsist", "File Not Found", JOptionPane.ERROR_MESSAGE);
 				}
 				PrintWriter ebayOutFile = new PrintWriter(fw);
+				
 				if(txtItemName.getText().length() != 0){
 					if (cmboCond.getSelectedItem() != "Choose..."){
 						if(txtItem_Cost.getText().length() != 0){
@@ -125,12 +126,30 @@ public class ebay_Listing extends JFrame {
 										if(txtBoughtDate.getText().length() != 0){
 											if (txtBoughtDate.getText().length() == 10){
 												
+												
 												try {
 													Double.parseDouble(txtAskingPrice.getText());
 													
 											    } catch (NumberFormatException e1) {
 											        JOptionPane.showMessageDialog(null, "bad number");
 											        txtAskingPrice.requestFocus();
+											        complete = false;
+											    }
+												
+												try {
+													Double.parseDouble(txtItem_Cost.getText());
+													
+											    } catch (NumberFormatException e1) {
+											        JOptionPane.showMessageDialog(null, "bad number");
+											        txtItem_Cost.requestFocus();
+											        complete = false;
+											    }
+												try {
+													Integer.parseInt(txtWeight.getText());
+													
+											    } catch (NumberFormatException e1) {
+											        JOptionPane.showMessageDialog(null, "bad number");
+											        txtWeight.requestFocus();
 											        complete = false;
 											    }
 												
@@ -303,6 +322,7 @@ public class ebay_Listing extends JFrame {
 		return Integer.toString(y);
 	}
 	private String getNextItemID() {
+		
 		
 		return null;
 	}
