@@ -138,6 +138,7 @@ public class ebay_Listing extends JFrame {
 													ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
 												    		+ "," + txtAskingPrice.getText() + "," + txtBoughtDate.getText());
 													ebayOutFile.close();
+													
 												}
 												
 											}else{
