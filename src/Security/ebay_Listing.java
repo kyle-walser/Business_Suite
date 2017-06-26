@@ -121,61 +121,56 @@ public class ebay_Listing extends JFrame {
 					if (cmboCond.getSelectedItem() != "Choose..."){
 						if(txtItem_Cost.getText().length() != 0){
 							if(txtWeight.getText().length() != 0){
-								if (cmboMethod.getSelectedItem() !=  "Choose...."){
-									if(txtAskingPrice.getText().length() != 0){
-										if(txtBoughtDate.getText().length() != 0){
-											if (txtBoughtDate.getText().length() == 10){
-												
-												
-												try {
-													Double.parseDouble(txtAskingPrice.getText());
+								if(txtCategory.getText().length() != 0){
+									if (cmboMethod.getSelectedItem() !=  "Choose...."){
+										if(txtAskingPrice.getText().length() != 0){
+											if(txtBoughtDate.getText().length() != 0){
+												if (txtBoughtDate.getText().length() == 10){
 													
-											    } catch (NumberFormatException e1) {
-											        JOptionPane.showMessageDialog(null, "bad number");
-											        txtAskingPrice.requestFocus();
-											        complete = false;
-											    }
-												
-												try {
-													Double.parseDouble(txtItem_Cost.getText());
 													
-											    } catch (NumberFormatException e1) {
-											        JOptionPane.showMessageDialog(null, "bad number");
-											        txtItem_Cost.requestFocus();
-											        complete = false;
-											    }
-												try {
-													Integer.parseInt(txtWeight.getText());
+													try {
+														Double.parseDouble(txtAskingPrice.getText());
+														Double.parseDouble(txtItem_Cost.getText());
+														Integer.parseInt(txtWeight.getText());
+												    } catch (NumberFormatException e1) {
+												        
+												        
+												        complete = false;
+												       
+												    }
 													
-											    } catch (NumberFormatException e1) {
-											        JOptionPane.showMessageDialog(null, "bad number");
-											        txtWeight.requestFocus();
-											        complete = false;
-											    }
-												
-												if (complete == true){
-													ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
-												    		+ "," + txtAskingPrice.getText() + "," + txtBoughtDate.getText());
-													ebayOutFile.close();
 													
+													
+													
+													if (complete == true){
+														/*ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
+													    		+ "," + txtAskingPrice.getText() + "," + txtBoughtDate.getText());*/
+														System.out.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
+													    		+ "," + txtAskingPrice.getText() + "," + txtBoughtDate.getText());
+														ebayOutFile.close();
+														
+													}
+													
+												}else{
+													JOptionPane.showMessageDialog(null, "Please enter date in format 'xx/xx/xxxx'", "Date Format Error" , JOptionPane.ERROR_MESSAGE);
+													txtBoughtDate.requestFocus();
 												}
-												
 											}else{
-												JOptionPane.showMessageDialog(null, "Please enter date in format 'xx/xx/xxxx'", "Date Format Error" , JOptionPane.ERROR_MESSAGE);
+												JOptionPane.showMessageDialog(null, "Item bought date can't be blank", "Bought Date Blank Error" , JOptionPane.ERROR_MESSAGE);
 												txtBoughtDate.requestFocus();
 											}
 										}else{
-											JOptionPane.showMessageDialog(null, "Item bought date can't be blank", "Bought Date Blank Error" , JOptionPane.ERROR_MESSAGE);
-											txtBoughtDate.requestFocus();
+											JOptionPane.showMessageDialog(null, "Item asking price can't be blank", "Asking Price Blank Error" , JOptionPane.ERROR_MESSAGE);
+											txtAskingPrice.requestFocus();
 										}
 									}else{
-										JOptionPane.showMessageDialog(null, "Item asking price can't be blank", "Asking Price Blank Error" , JOptionPane.ERROR_MESSAGE);
-										txtAskingPrice.requestFocus();
+										JOptionPane.showMessageDialog(null, "Please select a sourcing method", "Method Blank Error" , JOptionPane.ERROR_MESSAGE);
+										cmboMethod.requestFocus();
 									}
 								}else{
-									JOptionPane.showMessageDialog(null, "Please select a sourcing method", "Method Blank Error" , JOptionPane.ERROR_MESSAGE);
-									cmboMethod.requestFocus();
-								}
+									JOptionPane.showMessageDialog(null, "Item Category can't be blank", "Category Blank Error" , JOptionPane.ERROR_MESSAGE);
+									txtCategory.requestFocus();
+							}
 							}else{
 								JOptionPane.showMessageDialog(null, "Item weight can't be blank", "Weight Blank Error" , JOptionPane.ERROR_MESSAGE);
 								txtWeight.requestFocus();
@@ -325,5 +320,44 @@ public class ebay_Listing extends JFrame {
 		
 		
 		return null;
+	}
+	private String checkDbl(String in){
+		char[] check = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
+		boolean isDone = false;
+		String number = "";
+		for (int i = 0; i < in.length(); i++){
+			for (int l = 0; l < 11; l++){
+			
+				if (in.charAt(i) == check[l]){
+					if(in.charAt(i) == check[10] && isDone == false){
+						number.concat(Character.toString( in.charAt(i)));
+						isDone = true;
+					}else if(in.charAt(i) < check[10]){
+						number.concat(Character.toString( in.charAt(i)));
+					}
+					
+				}
+			}
+		}
+		
+		return number;
+	}
+	private String checkint(String in){
+		char[] check = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+		
+		String number = "";
+		for (int i = 0; i < in.length(); i++){
+			for (int l = 0; l < 11; l++){
+			
+				if (in.charAt(i) == check[l]){
+				
+						number.concat(Character.toString( in.charAt(i)));
+					
+					
+				}
+			}
+		}
+		
+		return number;
 	}
 }
