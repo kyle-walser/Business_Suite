@@ -127,8 +127,8 @@ public class ebay_Listing extends JFrame {
 								if (input.length()> 0){
 									check = true;
 								}else{
-									txtItem_Cost.setText(JOptionPane.showInputDialog(null, txtItem_Cost.getText() + " is not a valid weight. \n Please enter another weight.", 
-                                                         "Weight error", JOptionPane.ERROR_MESSAGE));
+									txtItem_Cost.setText(JOptionPane.showInputDialog(null, txtItem_Cost.getText() + " is not a valid value. \n Please enter a different amount.", 
+                                                         "Price error", JOptionPane.ERROR_MESSAGE));
 								}
 							}
 							txtItem_Cost.setText(input);
@@ -140,7 +140,10 @@ public class ebay_Listing extends JFrame {
 									input = checkInt(txtWeight.getText());
 									if (input.length()> 0){
 										check = true;
-									}
+									}else{
+										txtWeight.setText(JOptionPane.showInputDialog(null, txtWeight.getText() + " is not a valid weight. \n Please enter another weight.", 
+                                                "Weight error", JOptionPane.ERROR_MESSAGE));
+						            }
 								}
 								txtWeight.setText(input);
 								
@@ -150,10 +153,13 @@ public class ebay_Listing extends JFrame {
 											check = false;
 											input = "";
 											while (check == false){
-												input = checkDbl(txtAskingPrice.getText());
+												input =  checkDbl(txtAskingPrice.getText());
 												if (input.length()> 0){
 													check = true;
-												}
+												}else{
+													txtAskingPrice.setText(JOptionPane.showInputDialog(null, txtAskingPrice.getText() + " is not a valid weight. \n Please enter another weight.", 
+			                                                "Price error", JOptionPane.ERROR_MESSAGE));
+									            }
 											}
 											txtAskingPrice.setText(input);
 											if(txtBoughtDate.getText().length() != 0){
@@ -359,6 +365,7 @@ public class ebay_Listing extends JFrame {
 		char[] check = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
 		boolean isDone = false;
 		String number = "";
+		int digit = 0;
 		for (int i = 0; i < in.length(); i++){
 			for (int l = 0; l < 11; l++){
 			
@@ -367,9 +374,13 @@ public class ebay_Listing extends JFrame {
 						number = number + Character.toString( in.charAt(i));
 						isDone = true;
 					}
-					if(in.charAt(i) == check[l] && l < 10){
+					if(in.charAt(i) == check[l] && l < 10 && digit < 2){
 						number = number + Character.toString( in.charAt(i));
+						if (isDone == true){
+							digit++;
+						}
 					}
+				
 					
 				}
 			}
