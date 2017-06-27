@@ -120,10 +120,42 @@ public class ebay_Listing extends JFrame {
 				if(txtItemName.getText().length() != 0){
 					if (cmboCond.getSelectedItem() != "Choose..."){
 						if(txtItem_Cost.getText().length() != 0){
+							String input = "";
+							boolean check = false;
+							while (check == false){
+								input = checkDbl(txtItem_Cost.getText());
+								if (input.length()> 0){
+									check = true;
+								}else{
+									txtItem_Cost.setText(JOptionPane.showInputDialog(null, txtItem_Cost.getText() + " is not a valid weight. \n Please enter another weight.", 
+                                                         "Weight error", JOptionPane.ERROR_MESSAGE));
+								}
+							}
+							txtItem_Cost.setText(input);
+							
 							if(txtWeight.getText().length() != 0){
+								check = false;
+								input = "";
+								while (check == false){
+									input = checkInt(txtWeight.getText());
+									if (input.length()> 0){
+										check = true;
+									}
+								}
+								txtWeight.setText(input);
+								
 								if(txtCategory.getText().length() != 0){
 									if (cmboMethod.getSelectedItem() !=  "Choose...."){
 										if(txtAskingPrice.getText().length() != 0){
+											check = false;
+											input = "";
+											while (check == false){
+												input = checkDbl(txtAskingPrice.getText());
+												if (input.length()> 0){
+													check = true;
+												}
+											}
+											txtAskingPrice.setText(input);
 											if(txtBoughtDate.getText().length() != 0){
 												if (txtBoughtDate.getText().length() == 10){
 													
@@ -144,9 +176,9 @@ public class ebay_Listing extends JFrame {
 													
 													if (complete == true){
 														/*ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
-													    		+ "," + txtAskingPrice.getText() + "," + txtBoughtDate.getText());*/
+													    		+ "," +cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText());*/
 														System.out.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
-													    		+ "," + txtAskingPrice.getText() + "," + txtBoughtDate.getText());
+													    		+ "," +cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText());
 														ebayOutFile.close();
 														
 													}
@@ -198,9 +230,11 @@ public class ebay_Listing extends JFrame {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				eBay_Home ebay = new eBay_Home();
 				ebay.setVisible(true);
 				dispose();
+				
 			}
 		});
 		btnBack.setBounds(29, 318, 94, 31);
@@ -330,10 +364,11 @@ public class ebay_Listing extends JFrame {
 			
 				if (in.charAt(i) == check[l]){
 					if(in.charAt(i) == check[10] && isDone == false){
-						number.concat(Character.toString( in.charAt(i)));
+						number = number + Character.toString( in.charAt(i));
 						isDone = true;
-					}else if(in.charAt(i) < check[10]){
-						number.concat(Character.toString( in.charAt(i)));
+					}
+					if(in.charAt(i) == check[l] && l < 10){
+						number = number + Character.toString( in.charAt(i));
 					}
 					
 				}
@@ -342,16 +377,16 @@ public class ebay_Listing extends JFrame {
 		
 		return number;
 	}
-	private String checkint(String in){
+	private String checkInt(String in){
 		char[] check = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 		
 		String number = "";
 		for (int i = 0; i < in.length(); i++){
-			for (int l = 0; l < 11; l++){
+			for (int l = 0; l < 10; l++){
 			
 				if (in.charAt(i) == check[l]){
-				
-						number.concat(Character.toString( in.charAt(i)));
+					
+					number = number + Character.toString( in.charAt(i));
 					
 					
 				}
