@@ -95,6 +95,11 @@ public class ebay_Listing extends JFrame {
 		cmboMethod.setBounds(111, 213, 86, 20);
 		contentPane.add(cmboMethod);
 		
+		JComboBox cmboWeightType = new JComboBox();
+		cmboWeightType.setModel(new DefaultComboBoxModel(new String[] {"LBS", "OZS"}));
+		cmboWeightType.setBounds(207, 145, 61, 20);
+		contentPane.add(cmboWeightType);
+		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -169,7 +174,7 @@ public class ebay_Listing extends JFrame {
 												
 													String message = "Item saved";
 														ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
-													    		+ "," + txtCategory.getText() + "," + cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText() + ",");
+													    		+ cmboWeightType.getSelectedItem() + "," + txtCategory.getText() + "," + cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText() + ",");
 														
 														ebayOutFile.close();
 														
@@ -288,6 +293,8 @@ public class ebay_Listing extends JFrame {
 		txtBoughtDate.setBounds(111, 274, 86, 20);
 		contentPane.add(txtBoughtDate);
 		txtBoughtDate.setColumns(10);
+		
+		
 		
 		
 	}
