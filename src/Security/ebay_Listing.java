@@ -20,6 +20,7 @@ import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class ebay_Listing extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ebay_Listing() {
 		setTitle("Business Suite - Ebay Listing");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,15 +109,8 @@ public class ebay_Listing extends JFrame {
 		JButton btnSaveItem = new JButton("Save Item");
 		btnSaveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean complete = true;
 				FileWriter fw = null;
-				try {
-					fw = new FileWriter("C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt",true);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null,"File does not exsist", "File Not Found", JOptionPane.ERROR_MESSAGE);
-				}
-				PrintWriter ebayOutFile = new PrintWriter(fw);
+				
 				
 				if(txtItemName.getText().length() != 0){
 					if (cmboCond.getSelectedItem() != "Choose..."){
@@ -164,12 +159,20 @@ public class ebay_Listing extends JFrame {
 											txtAskingPrice.setText(input);
 											if(txtBoughtDate.getText().length() != 0){
 												if (txtBoughtDate.getText().length() == 10){
+													try {
+														fw = new FileWriter("C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt",true);
+													} catch (IOException e1) {
+														// TODO Auto-generated catch block
+														JOptionPane.showMessageDialog(null,"File does not exsist", "File Not Found", JOptionPane.ERROR_MESSAGE);
+													}
+													PrintWriter ebayOutFile = new PrintWriter(fw);
 												
 													String message = "Item saved";
 														ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
 													    		+ "," + txtCategory.getText() + "," + cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText() + ",");
 														
 														ebayOutFile.close();
+														
 														JOptionPane.showMessageDialog(null, message);
 														txtItem_Cost.setText("");
 														txtItemName.setText("");
@@ -348,9 +351,37 @@ public class ebay_Listing extends JFrame {
 		return Integer.toString(y);
 	}
 	private String getNextItemID() {
+		int last = 0;
+		FileReader fin = null;
+		try {
+			 fin = new FileReader("C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt");
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedReader read = new BufferedReader(fin);
 		
+		try {
+			while (read.readLine() != null){
+				last++;
+				
+			
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			read.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		return null;
+		return "EB" + Integer.toString(last + 1);
 	}
 	private String checkDbl(String in){
 		char[] check = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
