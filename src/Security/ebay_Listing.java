@@ -164,30 +164,21 @@ public class ebay_Listing extends JFrame {
 											txtAskingPrice.setText(input);
 											if(txtBoughtDate.getText().length() != 0){
 												if (txtBoughtDate.getText().length() == 10){
-													
-													
-													try {
-														Double.parseDouble(txtAskingPrice.getText());
-														Double.parseDouble(txtItem_Cost.getText());
-														Integer.parseInt(txtWeight.getText());
-												    } catch (NumberFormatException e1) {
-												        
-												        
-												        complete = false;
-												       
-												    }
-													
-													
-													
-													
-													if (complete == true){
-														/*ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
-													    		+ "," +cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText());*/
-														System.out.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
-													    		+ "," +cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText());
-														ebayOutFile.close();
+												
+													String message = "Item saved";
+														ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
+													    		+ "," + txtCategory.getText() + "," + cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText() + ",");
 														
-													}
+														ebayOutFile.close();
+														JOptionPane.showMessageDialog(null, message);
+														txtItem_Cost.setText("");
+														txtItemName.setText("");
+														txtWeight.setText("");
+														txtAskingPrice.setText("");
+														cmboMethod.setSelectedItem("Choose....");
+														cmboCond.setSelectedItem("Choose...");
+														txtBoughtDate.setText("");
+														txtCategory.setText("");
 													
 												}else{
 													JOptionPane.showMessageDialog(null, "Please enter date in format 'xx/xx/xxxx'", "Date Format Error" , JOptionPane.ERROR_MESSAGE);
@@ -406,4 +397,5 @@ public class ebay_Listing extends JFrame {
 		
 		return number;
 	}
+	
 }
