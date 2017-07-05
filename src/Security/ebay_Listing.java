@@ -25,6 +25,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -172,13 +174,13 @@ public class ebay_Listing extends JFrame {
 													}
 													PrintWriter ebayOutFile = new PrintWriter(fw);
 												
-													String message = "Item saved";
-														ebayOutFile.println(getNextItemID() + "," + txtItemName.getText() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
-													    		+ cmboWeightType.getSelectedItem() + "," + txtCategory.getText() + "," + cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText() + ",");
+													String message = "Item saved\n" + "Record ID is: " + getNextItemID();
+														ebayOutFile.println(getNextItemID() + "," + txtItemName.getText().toUpperCase() + "," + cmboCond.getSelectedItem() + "," + txtItem_Cost.getText() + "," + txtWeight.getText()
+													    		+ cmboWeightType.getSelectedItem() + "," + txtCategory.getText() + "," + cmboMethod.getSelectedItem() + ","+ txtAskingPrice.getText() + "," + txtBoughtDate.getText() + "," + getDate() + ",");
 														
 														ebayOutFile.close();
 														
-														JOptionPane.showMessageDialog(null, message);
+														JOptionPane.showMessageDialog(null, message,"Item Accepted", JOptionPane.PLAIN_MESSAGE);
 														txtItem_Cost.setText("");
 														txtItemName.setText("");
 														txtWeight.setText("");
@@ -235,6 +237,7 @@ public class ebay_Listing extends JFrame {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				
 				eBay_Home ebay = new eBay_Home();
 				ebay.setVisible(true);
@@ -435,5 +438,9 @@ public class ebay_Listing extends JFrame {
 		
 		return number;
 	}
-	
+	private String getDate(){
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
 }
