@@ -45,7 +45,14 @@ public class eBay_Home extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton ShippingBtn = new JButton("Shipping");
-		ShippingBtn.setBounds(224, 127, 200, 50);
+		ShippingBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				eBay_Shipping ship = new eBay_Shipping();
+				ship.setVisible(true);
+				dispose();
+			}
+		});
+		ShippingBtn.setBounds(220, 97, 200, 50);
 		contentPane.add(ShippingBtn);
 		
 		JButton listingbtn = new JButton("Listing");
@@ -56,7 +63,7 @@ public class eBay_Home extends JFrame {
 				dispose();
 			}
 		});
-		listingbtn.setBounds(10, 127, 200, 50);
+		listingbtn.setBounds(10, 97, 200, 50);
 		contentPane.add(listingbtn);
 		
 		JLabel lblNewLabel = new JLabel("Welcome to Ebay Zone. ");
@@ -83,6 +90,9 @@ public class eBay_Home extends JFrame {
 		});
 		btnBack.setBounds(210, 223, 104, 28);
 		contentPane.add(btnBack);
+		
+		JButton btnReports = new JButton("Reports");
+		btnReports.setBounds(124, 168, 180, 44);
+		contentPane.add(btnReports);
 	}
-
 }
