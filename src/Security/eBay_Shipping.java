@@ -85,7 +85,25 @@ public class eBay_Shipping extends JFrame {
 		contentPane.add(txtTitle);
 		txtTitle.setColumns(10);
 		
+		JComboBox cmboUSPSShipOpt = new JComboBox();
+		cmboUSPSShipOpt.setModel(new DefaultComboBoxModel(new String[] {"First-Class", "Priority(W)", "Priority(FRE)", "Priority(FRPE)", "Priority(FRS)", "Priority(FRM)", "Priority(FRL)", "Express"}));
+		cmboUSPSShipOpt.setBounds(297, 115, 89, 20);
+		cmboUSPSShipOpt.setVisible(false);
+		contentPane.add(cmboUSPSShipOpt);
+		
 		JComboBox cmboShipService = new JComboBox();
+		cmboShipService.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ship = (String) cmboShipService.getSelectedItem();
+				
+				if (ship == "USPS")
+				{
+					cmboUSPSShipOpt.setVisible(true);
+					//cmboUPSShipOpt.setVisible(false);
+				}
+						
+			}
+		});
 		cmboShipService.setModel(new DefaultComboBoxModel(new String[] {"USPS", "UPS"}));
 		cmboShipService.setVisible(false);
 		cmboShipService.setBounds(118, 115, 66, 20);
@@ -138,13 +156,8 @@ public class eBay_Shipping extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Shipping Opt.:");
-		lblNewLabel_5.setBounds(223, 118, 86, 14);
+		lblNewLabel_5.setBounds(223, 118, 73, 14);
 		contentPane.add(lblNewLabel_5);
-		
-		JComboBox cmboShipOpt = new JComboBox();
-		cmboShipOpt.setModel(new DefaultComboBoxModel(new String[] {"First-Class", "Priority(W)", "Priority(FRE)", "Priority(FRPE)", "Priority(FRS)", "Priority(FRM)", "Priority(FRL)", "Express"}));
-		cmboShipOpt.setBounds(297, 115, 89, 20);
-		contentPane.add(cmboShipOpt);
 		
 		btnSearchItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -153,6 +166,7 @@ public class eBay_Shipping extends JFrame {
 					btnSearchItem.setEnabled(false);
 					txtEbayID.setEnabled(false);
 					lblNewLabel_1.setVisible(true);
+					cmboShipService.setVisible(true);
 				}else{
 					JOptionPane.showMessageDialog(null, "You have entered an Invalid ID. \n Please try again", "Invaild ID Error", JOptionPane.ERROR_MESSAGE);
 					txtEbayID.setText("");
@@ -162,4 +176,6 @@ public class eBay_Shipping extends JFrame {
 			}
 		});
 	}
+    /** Listens to the combo box. */
+   
 }
