@@ -22,6 +22,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
+
+
 
 public class eBay_Shipping extends JFrame {
 
@@ -33,6 +40,7 @@ public class eBay_Shipping extends JFrame {
 	private JTextField txtPaypalAmt;
 	private JTextField txtDteSld;
 	private JTextField txtDteShp;
+	
 
 	/**
 	 * Launch the application.
@@ -57,6 +65,43 @@ public class eBay_Shipping extends JFrame {
 		setTitle("Business Suite - Item look-up");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 565, 400);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnNewMenu = new JMenu("File");
+		mnNewMenu.setMnemonic('f');
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mnNewMenu.add(mntmSave);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnNewMenu.add(mntmExit);
+		
+		JMenu mnNavigation = new JMenu("Navigation");
+		menuBar.add(mnNavigation);
+		
+		JMenuItem mntmHome = new JMenuItem("Home");
+		mnNavigation.add(mntmHome);
+		
+		JMenuItem mntmAmazon = new JMenuItem("Amazon Listing");
+		mnNavigation.add(mntmAmazon);
+		
+		JMenuItem mntmAmazonShipping = new JMenuItem("Amazon Shipping");
+		mnNavigation.add(mntmAmazonShipping);
+		
+		JMenuItem mntmEbayListing = new JMenuItem("Ebay Listing");
+		mnNavigation.add(mntmEbayListing);
+		
+		JMenuItem mntmReports = new JMenuItem("Reports");
+		mnNavigation.add(mntmReports);
+		
+		JMenu mnExit = new JMenu("Exit");
+		menuBar.add(mnExit);
+		
+		JMenuItem mntmEixt = new JMenuItem("Exit");
+		mnExit.add(mntmEixt);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -150,6 +195,7 @@ public class eBay_Shipping extends JFrame {
 		txtPaypalAmt.setColumns(10);
 		
 		txtDteSld = new JTextField();
+		
 		txtDteSld.setBounds(297, 90, 86, 20);
 		txtDteSld.setVisible(false);
 		contentPane.add(txtDteSld);
@@ -243,6 +289,49 @@ public class eBay_Shipping extends JFrame {
 		});
 		chkDteShp.setBounds(389, 142, 97, 23);
 		contentPane.add(chkDteShp);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setBounds(70, 228, 89, 23);
+		contentPane.add(btnBack);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtPaypalAmt.setVisible(false);
+				chkSldDte.setVisible(false);
+				btnSearchItem.setEnabled(true);
+				txtEbayID.setEnabled(true);
+				txtEbayID.setText("");
+				txtEbayID.requestFocus();
+				lblNewLabel_1.setVisible(false);
+				cmboShipService.setVisible(false);
+				txtTitle.setVisible(false);
+				lblSoldAmount.setVisible(false);
+				lblNewLabel_4.setVisible(false);
+				txtPaypalAmt.setVisible(false);
+				lblShippingService.setVisible(false);
+				chkDteShp.setVisible(false);
+				txtDteShp.setVisible(false);
+				lblNewLabel_3.setVisible(false);
+				txtSoldAmt.setVisible(false);
+				txtDteSld.setVisible(false);
+				lblNewLabel_5.setVisible(false);
+				cmboShipOpt.setVisible(false);
+				lblShippedPrice.setVisible(false);
+				txtShippedAmt.setVisible(false);
+				lblNewLabel_2.setVisible(false);
+			}
+		});
+		btnReset.setBounds(186, 228, 89, 23);
+		contentPane.add(btnReset);
+		
+		JButton btnNewButton = new JButton("Save");
+		btnNewButton.setBounds(297, 228, 89, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnExit = new JButton("Exit");
+		btnExit.setBounds(396, 228, 89, 23);
+		contentPane.add(btnExit);
 		
 		btnSearchItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
