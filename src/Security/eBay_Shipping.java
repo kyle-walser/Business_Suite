@@ -20,8 +20,14 @@ import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
@@ -69,20 +75,27 @@ public class eBay_Shipping extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("File");
-		mnNewMenu.setMnemonic('f');
-		menuBar.add(mnNewMenu);
+		JMenu mnFile = new JMenu("File");
+		mnFile.setMnemonic('f');
+		menuBar.add(mnFile);
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
-		mnNewMenu.add(mntmSave);
+		mnFile.add(mntmSave);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
-		mnNewMenu.add(mntmExit);
+		mnFile.add(mntmExit);
 		
 		JMenu mnNavigation = new JMenu("Navigation");
 		menuBar.add(mnNavigation);
 		
 		JMenuItem mntmHome = new JMenuItem("Home");
+		mntmHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				welcome_Screen welcome = new welcome_Screen();
+				welcome.setVisible(true);
+				dispose();
+			}
+		});
 		mnNavigation.add(mntmHome);
 		
 		JMenuItem mntmAmazon = new JMenuItem("Amazon Listing");
@@ -92,6 +105,13 @@ public class eBay_Shipping extends JFrame {
 		mnNavigation.add(mntmAmazonShipping);
 		
 		JMenuItem mntmEbayListing = new JMenuItem("Ebay Listing");
+		mntmEbayListing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ebay_Listing list = new ebay_Listing();
+				list.setVisible(true);
+				dispose();
+			}
+		});
 		mnNavigation.add(mntmEbayListing);
 		
 		JMenuItem mntmReports = new JMenuItem("Reports");
@@ -101,6 +121,11 @@ public class eBay_Shipping extends JFrame {
 		menuBar.add(mnExit);
 		
 		JMenuItem mntmEixt = new JMenuItem("Exit");
+		mntmEixt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		mnExit.add(mntmEixt);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -330,12 +355,76 @@ public class eBay_Shipping extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		btnExit.setBounds(396, 228, 89, 23);
 		contentPane.add(btnExit);
 		
 		btnSearchItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtEbayID.getText().length() >  0 && txtEbayID.getText().substring(0, 2).toUpperCase().equals("EB") == true){
+
+					
+					
+					boolean found = false;
+						FileReader fin = null;
+						try {
+							 fin = new FileReader("C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt");
+							
+							
+							
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						BufferedReader read = new BufferedReader(fin);
+						String item = "";
+						String[] desc;
+						try {
+							//item = read.readLine();
+							desc = read.readLine().split(",");
+							
+							
+							while (desc[0].equals(null) == false || found != true ){
+							
+								
+								
+						
+								
+								if (desc[0].equals( txtEbayID.getText().toUpperCase()) == true)
+								{
+									found = true;
+									txtTitle.setText(desc[1]);
+									read.close();
+									
+								}else{
+									item = read.readLine();
+									if (item != null){
+										desc = item.split(",");
+									}else{
+										JOptionPane.showMessageDialog(null, "Your item can't be found", "Item not found ", JOptionPane.ERROR_MESSAGE);
+										read.close();
+										break;
+										
+									}
+									
+									
+								}
+								
+							}
+						} catch (IOException e) {
+							
+							//e.printStackTrace();
+						}
+						
+						
+						
+					
+					System.out.println(found);
+					//if (found == true){
 					txtEbayID.setText(txtEbayID.getText().toUpperCase());
 					txtPaypalAmt.setVisible(true);
 					chkSldDte.setVisible(true);
@@ -358,6 +447,7 @@ public class eBay_Shipping extends JFrame {
 					lblShippedPrice.setVisible(true);
 					txtShippedAmt.setVisible(true);
 					lblNewLabel_2.setVisible(true);
+					//}
 				
 					
 					
