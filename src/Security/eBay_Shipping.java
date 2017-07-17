@@ -33,6 +33,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 
@@ -137,11 +139,7 @@ public class eBay_Shipping extends JFrame {
 		
 		contentPane.add(lblNewLabel);
 		
-		txtEbayID = new JTextField();
-		txtEbayID.setBounds(59, 25, 86, 20);
 		
-		contentPane.add(txtEbayID);
-		txtEbayID.setColumns(10);
 		
 		
 		
@@ -362,7 +360,110 @@ public class eBay_Shipping extends JFrame {
 		});
 		btnExit.setBounds(396, 228, 89, 23);
 		contentPane.add(btnExit);
+		txtEbayID = new JTextField();
+		txtEbayID.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+
+					if (txtEbayID.getText().length() >  0 && txtEbayID.getText().substring(0, 2).toUpperCase().equals("EB") == true){
+
+						
+						
+						boolean found = false;
+							FileReader fin = null;
+							try {
+								 fin = new FileReader("C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt");
+								
+								
+								
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							BufferedReader read = new BufferedReader(fin);
+							String item = "";
+							String[] desc;
+							try {
+								desc = read.readLine().split(",");
+								
+								
+								while (desc[0].equals(null) == false || found != true ){
+								
+									
+									
+							
+									
+									if (desc[0].equals( txtEbayID.getText().toUpperCase()) == true)
+									{
+										found = true;
+										txtTitle.setText(desc[1]);
+										read.close();
+										break;
+										
+									}else{
+										item = read.readLine();
+										if (item != null){
+											desc = item.split(",");
+										}else{
+											JOptionPane.showMessageDialog(null, "Your item can't be found", "Item not found ", JOptionPane.ERROR_MESSAGE);
+											read.close();
+											break;
+											
+										}
+										
+										
+									}
+									
+								}
+							} catch (IOException e) {
+								
+								//e.printStackTrace();
+							}
+						if (found == true){
+						txtEbayID.setText(txtEbayID.getText().toUpperCase());
+						txtPaypalAmt.setVisible(true);
+						chkSldDte.setVisible(true);
+						btnSearchItem.setEnabled(false);
+						txtEbayID.setEnabled(false);
+						lblNewLabel_1.setVisible(true);
+						cmboShipService.setVisible(true);
+						txtTitle.setVisible(true);
+						lblSoldAmount.setVisible(true);
+						lblNewLabel_4.setVisible(true);
+						txtPaypalAmt.setVisible(true);
+						lblShippingService.setVisible(true);
+						chkDteShp.setVisible(true);
+						txtDteShp.setVisible(true);
+						lblNewLabel_3.setVisible(true);
+						txtSoldAmt.setVisible(true);
+						txtDteSld.setVisible(true);
+						lblNewLabel_5.setVisible(true);
+						cmboShipOpt.setVisible(true);
+						lblShippedPrice.setVisible(true);
+						txtShippedAmt.setVisible(true);
+						lblNewLabel_2.setVisible(true);
+						found = false;
+						
+						}
+					
+						
+						
+						
+					}else{
+						JOptionPane.showMessageDialog(null, "You have entered an Invalid ID. \n Please try again", "Invaild ID Error", JOptionPane.ERROR_MESSAGE);
+						txtEbayID.setText("");
+						txtEbayID.requestFocus();	
+					}
+					
+				
+				}
+			}
+		});
+		txtEbayID.setBounds(59, 25, 86, 20);
 		
+		contentPane.add(txtEbayID);
+		txtEbayID.setColumns(10);
 		btnSearchItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtEbayID.getText().length() >  0 && txtEbayID.getText().substring(0, 2).toUpperCase().equals("EB") == true){
@@ -384,7 +485,6 @@ public class eBay_Shipping extends JFrame {
 						String item = "";
 						String[] desc;
 						try {
-							//item = read.readLine();
 							desc = read.readLine().split(",");
 							
 							
@@ -399,6 +499,7 @@ public class eBay_Shipping extends JFrame {
 									found = true;
 									txtTitle.setText(desc[1]);
 									read.close();
+									break;
 									
 								}else{
 									item = read.readLine();
@@ -419,12 +520,7 @@ public class eBay_Shipping extends JFrame {
 							
 							//e.printStackTrace();
 						}
-						
-						
-						
-					
-					System.out.println(found);
-					//if (found == true){
+					if (found == true){
 					txtEbayID.setText(txtEbayID.getText().toUpperCase());
 					txtPaypalAmt.setVisible(true);
 					chkSldDte.setVisible(true);
@@ -447,7 +543,9 @@ public class eBay_Shipping extends JFrame {
 					lblShippedPrice.setVisible(true);
 					txtShippedAmt.setVisible(true);
 					lblNewLabel_2.setVisible(true);
-					//}
+					found = false;
+					
+					}
 				
 					
 					
