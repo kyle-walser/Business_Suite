@@ -24,8 +24,10 @@ import javax.swing.JCheckBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JMenuBar;
@@ -33,6 +35,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -563,5 +566,43 @@ public class eBay_Shipping extends JFrame {
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date date = new Date();
 		return dateFormat.format(date);
+	}
+	private void setRecord(String IDIn, String concat){
+		String file = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt";
+		String FileOut = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItemsSold.txt"
+		
+		FileReader fin= null;
+		
+		try {
+			fin = new FileReader(file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		BufferedReader bin = new BufferedReader(fin);
+		String[] output;
+		String temp = "";
+		
+		try {
+			temp = bin.readLine();
+			output = temp.split(",");
+			while (output != null){
+				
+				if (output[0].equals(IDIn) == true){
+					temp = temp + concat;
+					FileWriter FW = new FileWriter(FileOut);
+					BufferedWriter BW = new BufferedWriter(FW);
+					
+					//BW.p
+					
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
