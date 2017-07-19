@@ -25,10 +25,12 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -51,6 +53,7 @@ public class eBay_Shipping extends JFrame {
 	private JTextField txtPaypalAmt;
 	private JTextField txtDteSld;
 	private JTextField txtDteShp;
+	ebay_Listing ebay = new ebay_Listing();
 	
 
 	/**
@@ -186,9 +189,13 @@ public class eBay_Shipping extends JFrame {
 		txtSoldAmt.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
+				txtSoldAmt.setText(ebay.checkDbl(txtSoldAmt.getText()));
 				if (txtSoldAmt.getText().length() > 0){
-					txtPaypalAmt.setText(Double.toString((Double.parseDouble(txtSoldAmt.getText())*.1)));
+					txtPaypalAmt.setText(Double.toString((Double.parseDouble( txtSoldAmt.getText())*.1)));
 					
+				}else{
+					JOptionPane.showMessageDialog(null, "Please enter a valid price", "ENTER A PRICE", JOptionPane.INFORMATION_MESSAGE);
+					txtSoldAmt.requestFocus();
 				}
 			}
 		});
@@ -332,19 +339,25 @@ public class eBay_Shipping extends JFrame {
 				lblNewLabel_1.setVisible(false);
 				cmboShipService.setVisible(false);
 				txtTitle.setVisible(false);
+				txtTitle.setText("");
 				lblSoldAmount.setVisible(false);
 				lblNewLabel_4.setVisible(false);
 				txtPaypalAmt.setVisible(false);
+				txtPaypalAmt.setText("");
 				lblShippingService.setVisible(false);
 				chkDteShp.setVisible(false);
 				txtDteShp.setVisible(false);
+				txtDteShp.setText("");
 				lblNewLabel_3.setVisible(false);
 				txtSoldAmt.setVisible(false);
+				txtSoldAmt.setText("");
+				txtDteSld.setText("");
 				txtDteSld.setVisible(false);
 				lblNewLabel_5.setVisible(false);
 				cmboShipOpt.setVisible(false);
 				lblShippedPrice.setVisible(false);
 				txtShippedAmt.setVisible(false);
+				txtShippedAmt.setText("");
 				lblNewLabel_2.setVisible(false);
 			}
 		});
@@ -364,6 +377,7 @@ public class eBay_Shipping extends JFrame {
 		btnExit.setBounds(396, 228, 89, 23);
 		contentPane.add(btnExit);
 		txtEbayID = new JTextField();
+		
 		txtEbayID.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent evt) {
@@ -402,6 +416,7 @@ public class eBay_Shipping extends JFrame {
 										found = true;
 										txtTitle.setText(desc[1]);
 										read.close();
+										txtSoldAmt.requestFocusInWindow();
 										break;
 										
 									}else{
@@ -568,13 +583,13 @@ public class eBay_Shipping extends JFrame {
 		return dateFormat.format(date);
 	}
 	private void setRecord(String IDIn, String concat){
-		String file = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt";
-		String FileOut = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItemsSold.txt"
-		
+		String EbayItemList = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt";
+		String EbaySoldFile = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItemsSold.txt";
+		String TempFile = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\Temp.txt";
 		FileReader fin= null;
 		
 		try {
-			fin = new FileReader(file);
+			fin = new FileReader(EbayItemList);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -591,14 +606,30 @@ public class eBay_Shipping extends JFrame {
 				
 				if (output[0].equals(IDIn) == true){
 					temp = temp + concat;
-					FileWriter FW = new FileWriter(FileOut);
-					BufferedWriter BW = new BufferedWriter(FW);
+					FileWriter FW = new FileWriter(EbaySoldFile,true);
+					PrintWriter Sold = new PrintWriter(FW);
 					
-					//BW.p
+					Sold.println(temp);
+					
+					Sold.close();
+				}else{
+					FileWriter FW = new FileWriter(TempFile,true);
+					PrintWriter TempList = new PrintWriter(FW);
+					
+					TempList.println(temp);
+					TempList.close();
+					
 					
 				}
 				
+				
 			}
+			File File = new File(EbayItemList);
+			
+			File.delete();
+			File = new File(TempFile);
+			File fRename = new File(EbayItemList);
+			File.renameTo(fRename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

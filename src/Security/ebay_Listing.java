@@ -393,7 +393,7 @@ public class ebay_Listing extends JFrame {
 		
 		return "EB" + Integer.toString(last + 1);
 	}
-	private String checkDbl(String in){
+	public String checkDbl(String in){
 		char[] check = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
 		boolean isDone = false;
 		String number = "";
@@ -420,7 +420,7 @@ public class ebay_Listing extends JFrame {
 		
 		return number;
 	}
-	private String checkInt(String in){
+	public String checkInt(String in){
 		char[] check = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 		
 		String number = "";
