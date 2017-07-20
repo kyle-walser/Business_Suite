@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -191,7 +192,9 @@ public class eBay_Shipping extends JFrame {
 			public void focusLost(FocusEvent arg0) {
 				txtSoldAmt.setText(ebay.checkDbl(txtSoldAmt.getText()));
 				if (txtSoldAmt.getText().length() > 0){
-					txtPaypalAmt.setText(Double.toString((Double.parseDouble( txtSoldAmt.getText())*.1)));
+					Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble( txtSoldAmt.getText())*.1));
+					txtPaypalAmt.setText(Double.toString(Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble( txtSoldAmt.getText())*.1))));
+					//txtPaypalAmt.setText(Double.toString(Double.parseDouble( txtSoldAmt.getText())*.1));
 					
 				}else{
 					JOptionPane.showMessageDialog(null, "Please enter a valid price", "ENTER A PRICE", JOptionPane.INFORMATION_MESSAGE);
@@ -416,8 +419,9 @@ public class eBay_Shipping extends JFrame {
 										found = true;
 										txtTitle.setText(desc[1]);
 										read.close();
-										txtSoldAmt.requestFocusInWindow();
+										
 										break;
+										
 										
 									}else{
 										item = read.readLine();
