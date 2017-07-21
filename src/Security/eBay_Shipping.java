@@ -32,6 +32,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -55,6 +56,8 @@ public class eBay_Shipping extends JFrame {
 	private JTextField txtDteSld;
 	private JTextField txtDteShp;
 	ebay_Listing ebay = new ebay_Listing();
+	
+	
 	
 
 	/**
@@ -192,8 +195,12 @@ public class eBay_Shipping extends JFrame {
 			public void focusLost(FocusEvent arg0) {
 				txtSoldAmt.setText(ebay.checkDbl(txtSoldAmt.getText()));
 				if (txtSoldAmt.getText().length() > 0){
-					Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble( txtSoldAmt.getText())*.1));
-					txtPaypalAmt.setText(Double.toString(Double.valueOf(new DecimalFormat("#.##").format(Double.parseDouble( txtSoldAmt.getText())*.1))));
+					
+					
+					System.out.println(new BigDecimal(Double.toString(Double.parseDouble( txtSoldAmt.getText())*.1)).setScale(2, BigDecimal.ROUND_HALF_UP));
+					
+					
+					System.out.println(Double.toString(Math.round((Double.parseDouble( txtSoldAmt.getText())*.1) * 100) / 100));
 					//txtPaypalAmt.setText(Double.toString(Double.parseDouble( txtSoldAmt.getText())*.1));
 					
 				}else{
@@ -254,6 +261,7 @@ public class eBay_Shipping extends JFrame {
 		
 		JComboBox cmboShipService = new JComboBox();
 		cmboShipService.addActionListener(new ActionListener() {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public void actionPerformed(ActionEvent e) {
 			//	String ship = (String) cmboShipService.getSelectedItem();
 				
@@ -640,4 +648,20 @@ public class eBay_Shipping extends JFrame {
 		}
 		
 	}
+	private String PaypayFee(String in){
+		return in;
+	}
+	/*public String roundUp(String  In){
+		String Temp = "";
+		int p= 0;
+		for (int i = 0; i <In.length(); i++)
+		{
+			if(p < 2 && ) 
+			Temp += In.charAt(i);
+			
+		}
+		
+		
+		return In;
+	}*/
 }
