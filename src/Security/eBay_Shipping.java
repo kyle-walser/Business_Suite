@@ -40,6 +40,10 @@ import javax.swing.JMenu;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -55,7 +59,9 @@ public class eBay_Shipping extends JFrame {
 	private JTextField txtPaypalAmt;
 	private JTextField txtDteSld;
 	private JTextField txtDteShp;
-	ebay_Listing ebay = new ebay_Listing();
+	private String Item_det;
+	
+	private ebay_Listing ebay = new ebay_Listing();
 	
 	
 	
@@ -149,10 +155,9 @@ public class eBay_Shipping extends JFrame {
 		
 		contentPane.add(lblNewLabel);
 		
-		
-		
-		
-		
+		JCheckBox chckbxInternational = new JCheckBox("International?");
+		chckbxInternational.setBounds(389, 114, 97, 23);
+		contentPane.add(chckbxInternational);
 		
 		JLabel lblNewLabel_1 = new JLabel("Item Name: ");
 		lblNewLabel_1.setVisible(false);
@@ -172,7 +177,7 @@ public class eBay_Shipping extends JFrame {
 		txtTitle.setColumns(10);
 		
 		JComboBox cmboShipOpt = new JComboBox();
-		cmboShipOpt.setBounds(297, 115, 89, 20);
+		cmboShipOpt.setBounds(297, 115, 86, 20);
 		cmboShipOpt.setVisible(false);
 		contentPane.add(cmboShipOpt);
 		
@@ -196,12 +201,11 @@ public class eBay_Shipping extends JFrame {
 				txtSoldAmt.setText(ebay.checkDbl(txtSoldAmt.getText()));
 				if (txtSoldAmt.getText().length() > 0){
 					
+					//System.out.println(PaypayFee(Double.parseDouble( txtSoldAmt.getText())));
+					//System.out.println(new BigDecimal(PaypayFee(Double.parseDouble( txtSoldAmt.getText()))) .setScale(2, BigDecimal.ROUND_HALF_UP));
 					
-					System.out.println(new BigDecimal(Double.toString(Double.parseDouble( txtSoldAmt.getText())*.1)).setScale(2, BigDecimal.ROUND_HALF_UP));
 					
-					
-					System.out.println(Double.toString(Math.round((Double.parseDouble( txtSoldAmt.getText())*.1) * 100) / 100));
-					//txtPaypalAmt.setText(Double.toString(Double.parseDouble( txtSoldAmt.getText())*.1));
+					txtPaypalAmt.setText(new BigDecimal(PaypayFee(Double.parseDouble( txtSoldAmt.getText()))) .setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 					
 				}else{
 					JOptionPane.showMessageDialog(null, "Please enter a valid price", "ENTER A PRICE", JOptionPane.INFORMATION_MESSAGE);
@@ -219,7 +223,14 @@ public class eBay_Shipping extends JFrame {
 		lblShippedPrice.setVisible(false);
 		contentPane.add(lblShippedPrice);
 		
+		
 		txtShippedAmt = new JTextField();
+		txtShippedAmt.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				txtShippedAmt.setText(ebay.checkDbl(txtShippedAmt.getText()));
+			}
+		});
 		txtShippedAmt.setBounds(115, 143, 86, 20);
 		txtShippedAmt.setVisible(false);
 		contentPane.add(txtShippedAmt);
@@ -341,6 +352,7 @@ public class eBay_Shipping extends JFrame {
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 				txtPaypalAmt.setVisible(false);
 				chkSldDte.setVisible(false);
 				btnSearchItem.setEnabled(true);
@@ -370,14 +382,24 @@ public class eBay_Shipping extends JFrame {
 				txtShippedAmt.setVisible(false);
 				txtShippedAmt.setText("");
 				lblNewLabel_2.setVisible(false);
+				chckbxInternational.setSelected(false);
+				chckbxInternational.setVisible(false);
+				
 			}
 		});
 		btnReset.setBounds(186, 228, 89, 23);
 		contentPane.add(btnReset);
 		
-		JButton btnNewButton = new JButton("Save");
-		btnNewButton.setBounds(297, 228, 89, 23);
-		contentPane.add(btnNewButton);
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String amend = "";
+				
+				setRecord(txtEbayID.getText(),Item_det,amend);
+			}
+		});
+		btnSave.setBounds(297, 228, 89, 23);
+		contentPane.add(btnSave);
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
@@ -427,7 +449,7 @@ public class eBay_Shipping extends JFrame {
 										found = true;
 										txtTitle.setText(desc[1]);
 										read.close();
-										
+										Item_det = item;
 										break;
 										
 										
@@ -494,6 +516,8 @@ public class eBay_Shipping extends JFrame {
 		
 		contentPane.add(txtEbayID);
 		txtEbayID.setColumns(10);
+		
+		
 		btnSearchItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtEbayID.getText().length() >  0 && txtEbayID.getText().substring(0, 2).toUpperCase().equals("EB") == true){
@@ -576,9 +600,6 @@ public class eBay_Shipping extends JFrame {
 					found = false;
 					
 					}
-				
-					
-					
 					
 				}else{
 					JOptionPane.showMessageDialog(null, "You have entered an Invalid ID. \n Please try again", "Invaild ID Error", JOptionPane.ERROR_MESSAGE);
@@ -594,11 +615,13 @@ public class eBay_Shipping extends JFrame {
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
-	private void setRecord(String IDIn, String concat){
+	private void setRecord(String ID,String orig,String concat){
 		String EbayItemList = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItems.txt";
 		String EbaySoldFile = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\EbayItemsSold.txt";
 		String TempFile = "C:\\Users\\kyle.walser\\workspace\\Business_Suite\\Temp.txt";
 		FileReader fin= null;
+		String[] item = orig.split(",");
+		
 		
 		try {
 			fin = new FileReader(EbayItemList);
@@ -616,7 +639,7 @@ public class eBay_Shipping extends JFrame {
 			output = temp.split(",");
 			while (output != null){
 				
-				if (output[0].equals(IDIn) == true){
+				if (output[0].equals(item[0]) == true){
 					temp = temp + concat;
 					FileWriter FW = new FileWriter(EbaySoldFile,true);
 					PrintWriter Sold = new PrintWriter(FW);
@@ -648,20 +671,30 @@ public class eBay_Shipping extends JFrame {
 		}
 		
 	}
-	private String PaypayFee(String in){
-		return in;
-	}
-	/*public String roundUp(String  In){
-		String Temp = "";
-		int p= 0;
-		for (int i = 0; i <In.length(); i++)
-		{
-			if(p < 2 && ) 
-			Temp += In.charAt(i);
+	private String PaypayFee(double in){
+		
+		FileReader fin = null;
+		try {
+			 fin = new FileReader("PayPal_Fee.txt");
 			
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedReader read = new BufferedReader(fin);
+		try {
+			String[] Fee = read.readLine().split(",");
+			read.close();
+			in = ((Double.parseDouble(Fee[0]) / 100) * in) + Double.parseDouble(Fee[1]);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		
-		return In;
-	}*/
+		return Double.toString(in);
+	}
 }
