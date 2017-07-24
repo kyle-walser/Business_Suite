@@ -62,6 +62,7 @@ public class eBay_Shipping extends JFrame {
 	private String Item_det;
 	
 	private ebay_Listing ebay = new ebay_Listing();
+	private JTextField txtProfit;
 	
 	
 	
@@ -156,7 +157,8 @@ public class eBay_Shipping extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JCheckBox chckbxInternational = new JCheckBox("International?");
-		chckbxInternational.setBounds(389, 114, 97, 23);
+		chckbxInternational.setBounds(389, 114, 114, 23);
+		chckbxInternational.setVisible(false);
 		contentPane.add(chckbxInternational);
 		
 		JLabel lblNewLabel_1 = new JLabel("Item Name: ");
@@ -262,7 +264,7 @@ public class eBay_Shipping extends JFrame {
 		
 		JLabel lblNewLabel_4 = new JLabel("Date Shipped:");
 		lblNewLabel_4.setVisible(false);
-		lblNewLabel_4.setBounds(211, 146, 76, 14);
+		lblNewLabel_4.setBounds(211, 146, 86, 14);
 		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Shipping Opt.:");
@@ -394,7 +396,7 @@ public class eBay_Shipping extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String amend = "";
-				
+				//System.out.println(domOrIntl( chckbxInternational.isSelected()));
 				setRecord(txtEbayID.getText(),Item_det,amend);
 			}
 		});
@@ -496,6 +498,8 @@ public class eBay_Shipping extends JFrame {
 						txtShippedAmt.setVisible(true);
 						lblNewLabel_2.setVisible(true);
 						found = false;
+						chckbxInternational.setVisible(true);
+						
 						
 						}
 					
@@ -516,6 +520,19 @@ public class eBay_Shipping extends JFrame {
 		
 		contentPane.add(txtEbayID);
 		txtEbayID.setColumns(10);
+		
+		JLabel lblProfit = new JLabel("Profit:");
+		lblProfit.setEnabled(false);
+		lblProfit.setBounds(297, 28, 46, 14);
+		contentPane.add(lblProfit);
+		
+		txtProfit = new JTextField();
+		txtProfit.setEnabled(false);
+		txtProfit.setEditable(false);
+		txtProfit.setBounds(353, 28, 86, 20);
+		txtProfit.setVisible(false); 
+		contentPane.add(txtProfit);
+		txtProfit.setColumns(10);
 		
 		
 		btnSearchItem.addActionListener(new ActionListener() {
@@ -598,6 +615,7 @@ public class eBay_Shipping extends JFrame {
 					txtShippedAmt.setVisible(true);
 					lblNewLabel_2.setVisible(true);
 					found = false;
+					chckbxInternational.setVisible(true);
 					
 					}
 					
@@ -696,5 +714,12 @@ public class eBay_Shipping extends JFrame {
 		
 		
 		return Double.toString(in);
+	}
+	private String domOrIntl(Boolean In){
+		if (In == true){
+			return "Intl";
+		}else{
+		return "Dom";	
+		}
 	}
 }
