@@ -356,10 +356,39 @@ public class eBay_Shipping extends JFrame {
 		btnBack.setBounds(70, 228, 89, 23);
 		contentPane.add(btnBack);
 		
+		JLabel lblProfit = new JLabel("Profit:");
+		lblProfit.setEnabled(false);
+		lblProfit.setVisible(false);
+		lblProfit.setBounds(297, 28, 46, 14);
+		contentPane.add(lblProfit);
+		
+		txtProfit = new JTextField();
+		txtProfit.setEnabled(false);
+		txtProfit.setEditable(false);
+		txtProfit.setBounds(353, 28, 86, 20);
+		txtProfit.setVisible(false); 
+		contentPane.add(txtProfit);
+		txtProfit.setColumns(10);
+		
+		JLabel lblEbayFee = new JLabel("Ebay Fee:");
+		lblEbayFee.setVisible(false);
+		lblEbayFee.setBounds(211, 171, 86, 14);
+		contentPane.add(lblEbayFee);
+		
+		txtEbayFee = new JTextField();
+		txtEbayFee.setVisible(false);
+		txtEbayFee.setBounds(297, 168, 86, 20);
+		contentPane.add(txtEbayFee);
+		txtEbayFee.setColumns(10);
+		
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				lblProfit.setVisible(false);
+				txtProfit.setVisible(false);
+				txtProfit.setText("");
+				txtEbayFee.setVisible(false);
+				txtEbayFee.setText("");
 				txtPaypalAmt.setVisible(false);
 				chkSldDte.setVisible(false);
 				btnSearchItem.setEnabled(true);
@@ -504,7 +533,9 @@ public class eBay_Shipping extends JFrame {
 						lblNewLabel_2.setVisible(true);
 						found = false;
 						chckbxInternational.setVisible(true);
-						
+						txtEbayFee.setVisible(true);
+						txtProfit.setVisible(true);
+						lblProfit.setVisible(true);
 						
 						}
 					
@@ -526,30 +557,7 @@ public class eBay_Shipping extends JFrame {
 		contentPane.add(txtEbayID);
 		txtEbayID.setColumns(10);
 		
-		JLabel lblProfit = new JLabel("Profit:");
-		lblProfit.setEnabled(false);
-		lblProfit.setVisible(false);
-		lblProfit.setBounds(297, 28, 46, 14);
-		contentPane.add(lblProfit);
 		
-		txtProfit = new JTextField();
-		txtProfit.setEnabled(false);
-		txtProfit.setEditable(false);
-		txtProfit.setBounds(353, 28, 86, 20);
-		txtProfit.setVisible(false); 
-		contentPane.add(txtProfit);
-		txtProfit.setColumns(10);
-		
-		JLabel lblEbayFee = new JLabel("Ebay Fee:");
-		lblEbayFee.setVisible(false);
-		lblEbayFee.setBounds(211, 171, 86, 14);
-		contentPane.add(lblEbayFee);
-		
-		txtEbayFee = new JTextField();
-		txtEbayFee.setVisible(false);
-		txtEbayFee.setBounds(297, 168, 86, 20);
-		contentPane.add(txtEbayFee);
-		txtEbayFee.setColumns(10);
 		
 		
 		btnSearchItem.addActionListener(new ActionListener() {
@@ -633,7 +641,9 @@ public class eBay_Shipping extends JFrame {
 					lblNewLabel_2.setVisible(true);
 					found = false;
 					chckbxInternational.setVisible(true);
-					
+					txtEbayFee.setVisible(true);
+					txtProfit.setVisible(true);
+					lblProfit.setVisible(true);
 					}
 					
 				}else{
