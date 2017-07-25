@@ -60,9 +60,11 @@ public class eBay_Shipping extends JFrame {
 	private JTextField txtDteSld;
 	private JTextField txtDteShp;
 	private String Item_det;
+	private double[] profit = {0.00,0.00,0.00,0.00};
 	
 	private ebay_Listing ebay = new ebay_Listing();
 	private JTextField txtProfit;
+	private JTextField txtEbayFee;
 	
 	
 	
@@ -208,6 +210,9 @@ public class eBay_Shipping extends JFrame {
 					
 					
 					txtPaypalAmt.setText(new BigDecimal(PaypayFee(Double.parseDouble( txtSoldAmt.getText()))) .setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+					profit[0] = Double.parseDouble(txtSoldAmt.getText());
+					profit[1] = Double.parseDouble(txtPaypalAmt.getText());
+					txtProfit.setText(profitAmount(profit));
 					
 				}else{
 					JOptionPane.showMessageDialog(null, "Please enter a valid price", "ENTER A PRICE", JOptionPane.INFORMATION_MESSAGE);
@@ -523,6 +528,7 @@ public class eBay_Shipping extends JFrame {
 		
 		JLabel lblProfit = new JLabel("Profit:");
 		lblProfit.setEnabled(false);
+		lblProfit.setVisible(false);
 		lblProfit.setBounds(297, 28, 46, 14);
 		contentPane.add(lblProfit);
 		
@@ -533,6 +539,17 @@ public class eBay_Shipping extends JFrame {
 		txtProfit.setVisible(false); 
 		contentPane.add(txtProfit);
 		txtProfit.setColumns(10);
+		
+		JLabel lblEbayFee = new JLabel("Ebay Fee:");
+		lblEbayFee.setVisible(false);
+		lblEbayFee.setBounds(211, 171, 86, 14);
+		contentPane.add(lblEbayFee);
+		
+		txtEbayFee = new JTextField();
+		txtEbayFee.setVisible(false);
+		txtEbayFee.setBounds(297, 168, 86, 20);
+		contentPane.add(txtEbayFee);
+		txtEbayFee.setColumns(10);
 		
 		
 		btnSearchItem.addActionListener(new ActionListener() {
@@ -721,5 +738,14 @@ public class eBay_Shipping extends JFrame {
 		}else{
 		return "Dom";	
 		}
+	}
+	private String profitAmount(double[] in){
+		
+		Double total = 0.0;
+		total = in[0];
+		for(int i = 1; i < 4; i++){
+			total -= in[i];
+		}
+		return Double.toString(total);
 	}
 }
