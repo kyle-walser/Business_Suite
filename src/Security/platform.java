@@ -85,7 +85,10 @@ public class platform extends JFrame {
 						JOptionPane.showMessageDialog(null, "Please choose a Platform", "Platform", JOptionPane.PLAIN_MESSAGE);
 						break;
 					case "Amazon":
-						
+						amazon_Home Amazon = new amazon_Home();
+						Amazon.setVisible(true);
+						dispose();
+						break;
 					case "Ebay":
 						eBay_Home ebay = new eBay_Home();
 						ebay.setVisible(true);
