@@ -60,10 +60,10 @@ public class eBay_Shipping extends JFrame {
 	private JTextField txtDteSld;
 	private JTextField txtDteShp;
 	private String Item_det;
-	private double[] profit = {0.00,0.00,0.00,0.00};
+	//private double[] profit = {0.00,0.00,0.00,0.00};
 	
 	private ebay_Listing ebay = new ebay_Listing();
-	private JTextField txtProfit;
+	//private JTextField txtProfit;
 	private JTextField txtEbayFee;
 	
 	
@@ -210,10 +210,10 @@ public class eBay_Shipping extends JFrame {
 					
 					
 					txtPaypalAmt.setText(new BigDecimal(PaypayFee(Double.parseDouble( txtSoldAmt.getText()))) .setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-					profit[0] = Double.parseDouble(txtSoldAmt.getText());
+					txtEbayFee.setText(eBayFee(txtSoldAmt.getText()));
+					/*profit[0] = Double.parseDouble(txtSoldAmt.getText());
 					profit[1] = Double.parseDouble(txtPaypalAmt.getText());
-					txtProfit.setText(profitAmount(profit));
-					
+					txtProfit.setText(profitAmount(profit));*/
 				}else{
 					JOptionPane.showMessageDialog(null, "Please enter a valid price", "ENTER A PRICE", JOptionPane.INFORMATION_MESSAGE);
 					txtSoldAmt.requestFocus();
@@ -236,6 +236,8 @@ public class eBay_Shipping extends JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				txtShippedAmt.setText(ebay.checkDbl(txtShippedAmt.getText()));
+				/*profit[2] = Double.parseDouble(txtShippedAmt.getText());
+				txtProfit.setText(profitAmount(profit));*/
 			}
 		});
 		txtShippedAmt.setBounds(115, 143, 86, 20);
@@ -356,19 +358,19 @@ public class eBay_Shipping extends JFrame {
 		btnBack.setBounds(70, 228, 89, 23);
 		contentPane.add(btnBack);
 		
-		JLabel lblProfit = new JLabel("Profit:");
+		/*JLabel lblProfit = new JLabel("Profit:");
 		lblProfit.setEnabled(false);
 		lblProfit.setVisible(false);
 		lblProfit.setBounds(297, 28, 46, 14);
-		contentPane.add(lblProfit);
+		contentPane.add(lblProfit);*/
 		
-		txtProfit = new JTextField();
+		/*txtProfit = new JTextField();
 		txtProfit.setEnabled(false);
 		txtProfit.setEditable(false);
 		txtProfit.setBounds(353, 28, 86, 20);
 		txtProfit.setVisible(false); 
 		contentPane.add(txtProfit);
-		txtProfit.setColumns(10);
+		txtProfit.setColumns(10);*/
 		
 		JLabel lblEbayFee = new JLabel("Ebay Fee:");
 		lblEbayFee.setVisible(false);
@@ -376,6 +378,15 @@ public class eBay_Shipping extends JFrame {
 		contentPane.add(lblEbayFee);
 		
 		txtEbayFee = new JTextField();
+		txtEbayFee.setEditable(false);
+		txtEbayFee.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+				/*profit[3] = Double.parseDouble(txtEbayFee.getText());
+				txtProfit.setText(profitAmount(profit));*/
+			}
+		});
 		txtEbayFee.setVisible(false);
 		txtEbayFee.setBounds(297, 168, 86, 20);
 		contentPane.add(txtEbayFee);
@@ -384,9 +395,9 @@ public class eBay_Shipping extends JFrame {
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblProfit.setVisible(false);
-				txtProfit.setVisible(false);
-				txtProfit.setText("");
+			//	lblProfit.setVisible(false);
+				//txtProfit.setVisible(false);
+				//txtProfit.setText("");
 				txtEbayFee.setVisible(false);
 				txtEbayFee.setText("");
 				txtPaypalAmt.setVisible(false);
@@ -420,7 +431,11 @@ public class eBay_Shipping extends JFrame {
 				lblNewLabel_2.setVisible(false);
 				chckbxInternational.setSelected(false);
 				chckbxInternational.setVisible(false);
-				
+				lblEbayFee.setVisible(false);
+			/*	profit[0] = 0.00;
+				profit[1] = 0.00;
+				profit[2] = 0.00;
+				profit[3] = 0.00;*/
 			}
 		});
 		btnReset.setBounds(186, 228, 89, 23);
@@ -429,9 +444,11 @@ public class eBay_Shipping extends JFrame {
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String amend = "";
-				//System.out.println(domOrIntl( chckbxInternational.isSelected()));
-				setRecord(txtEbayID.getText(),Item_det,amend);
+				String amend = txtSoldAmt.getText() + "," + txtDteSld.getText() + "," + cmboShipService.getSelectedItem() + ","+ cmboShipOpt.getSelectedItem() + ","
+						+ domOrIntl( chckbxInternational.isSelected()) + "," + txtShippedAmt.getText() + "," + txtDteShp.getText() + "," + txtPaypalAmt.getText() 
+						+ "," + txtEbayFee.getText();
+				
+					setRecord(txtEbayID.getText(),Item_det,amend);
 			}
 		});
 		btnSave.setBounds(297, 228, 89, 23);
@@ -478,15 +495,25 @@ public class eBay_Shipping extends JFrame {
 								
 									
 									
-							
 									
-									if (desc[0].equals( txtEbayID.getText().toUpperCase()) == true)
+									
+									if (desc[0].equals( txtEbayID.getText().toUpperCase()) == true )
 									{
+										if (desc[10].equals("Sold") ==false){
+											
+										
 										found = true;
 										txtTitle.setText(desc[1]);
 										read.close();
 										Item_det = item;
+										fin.close();
+										read.close();
 										break;
+										}else{
+											JOptionPane.showMessageDialog(null, "This item has been sold", "Sold Item", JOptionPane.INFORMATION_MESSAGE);
+											break;
+										}
+										
 										
 										
 									}else{
@@ -495,6 +522,7 @@ public class eBay_Shipping extends JFrame {
 											desc = item.split(",");
 										}else{
 											JOptionPane.showMessageDialog(null, "Your item can't be found", "Item not found ", JOptionPane.ERROR_MESSAGE);
+											fin.close();
 											read.close();
 											break;
 											
@@ -534,8 +562,9 @@ public class eBay_Shipping extends JFrame {
 						found = false;
 						chckbxInternational.setVisible(true);
 						txtEbayFee.setVisible(true);
-						txtProfit.setVisible(true);
-						lblProfit.setVisible(true);
+						/*txtProfit.setVisible(true);
+						lblProfit.setVisible(true);*/
+						lblEbayFee.setVisible(true);
 						
 						}
 					
@@ -595,6 +624,7 @@ public class eBay_Shipping extends JFrame {
 									found = true;
 									txtTitle.setText(desc[1]);
 									read.close();
+									fin.close();
 									break;
 									
 								}else{
@@ -604,6 +634,7 @@ public class eBay_Shipping extends JFrame {
 									}else{
 										JOptionPane.showMessageDialog(null, "Your item can't be found", "Item not found ", JOptionPane.ERROR_MESSAGE);
 										read.close();
+										fin.close();
 										break;
 										
 									}
@@ -642,8 +673,9 @@ public class eBay_Shipping extends JFrame {
 					found = false;
 					chckbxInternational.setVisible(true);
 					txtEbayFee.setVisible(true);
-					txtProfit.setVisible(true);
-					lblProfit.setVisible(true);
+					/*txtProfit.setVisible(true);
+					lblProfit.setVisible(true);*/
+					lblEbayFee.setVisible(true);
 					}
 					
 				}else{
@@ -684,35 +716,51 @@ public class eBay_Shipping extends JFrame {
 			output = temp.split(",");
 			while (output != null){
 				
-				if (output[0].equals(item[0]) == true){
-					temp = temp + concat;
+				if (output[0].equals(ID) == true){
+					
 					FileWriter FW = new FileWriter(EbaySoldFile,true);
 					PrintWriter Sold = new PrintWriter(FW);
 					
-					Sold.println(temp);
+					Sold.println(temp + concat);
 					
 					Sold.close();
-				}else{
+					FW.close();
+					temp = temp + "Sold";
+				}
+				
 					FileWriter FW = new FileWriter(TempFile,true);
 					PrintWriter TempList = new PrintWriter(FW);
 					
 					TempList.println(temp);
 					TempList.close();
+					FW.close();
 					
 					
-				}
 				
+				temp = "";
+				temp = bin.readLine();
+				if(temp == null)
+				{
+					break;
+				}
+				output = temp.split(",");
 				
 			}
+			fin.close();
+			bin.close();
 			File File = new File(EbayItemList);
 			
 			File.delete();
-			File = new File(TempFile);
-			File fRename = new File(EbayItemList);
-			File.renameTo(fRename);
+			if (File.exists() == false){
+				JOptionPane.showMessageDialog(null, "File is gone");
+			}
+			File NewF = new File("Temp.txt");
+			
+			File fRename = new File("EbayItems.txt");
+			NewF.renameTo(fRename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Something is wrong.");
 		}
 		
 	}
@@ -742,20 +790,58 @@ public class eBay_Shipping extends JFrame {
 		
 		return Double.toString(in);
 	}
+	private String eBayFee(String in){
+		
+		FileReader fin = null;
+		try {
+			 fin = new FileReader("eBay_Fee.txt");
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedReader read = new BufferedReader(fin);
+		
+		try {
+			
+			return 	new BigDecimal(Double.parseDouble(in ) * Double.parseDouble(read.readLine())).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "0.00";
+		/*try {
+			String[] Fee = read.readLine().split(",");
+			read.close();
+			inn = ((Double.parseDouble(Fee[0]) / 100) * inn) + Double.parseDouble(Fee[1]);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+	
+		
+	}
 	private String domOrIntl(Boolean In){
 		if (In == true){
 			return "Intl";
 		}else{
-		return "Dom";	
+			return "Dom";	
 		}
 	}
-	private String profitAmount(double[] in){
+/*	private String profitAmount(double[] in){
 		
-		Double total = 0.0;
+		Double total = 0.00;
+		
 		total = in[0];
+		
 		for(int i = 1; i < 4; i++){
-			total -= in[i];
+			total = total - in[i];
+			System.out.println(in[i]);	
 		}
-		return Double.toString(total);
-	}
+		return new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+	}*/
 }

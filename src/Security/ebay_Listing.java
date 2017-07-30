@@ -39,6 +39,7 @@ public class ebay_Listing extends JFrame {
 	private JTextField txtCategory;
 	private JTextField txtAskingPrice;
 	private JTextField txtBoughtDate;
+	private JTextField txtExtraCost;
 
 	/**
 	 * Launch the application.
@@ -296,6 +297,15 @@ public class ebay_Listing extends JFrame {
 		txtBoughtDate.setBounds(111, 274, 86, 20);
 		contentPane.add(txtBoughtDate);
 		txtBoughtDate.setColumns(10);
+		
+		txtExtraCost = new JTextField();
+		txtExtraCost.setBounds(272, 274, 61, 20);
+		contentPane.add(txtExtraCost);
+		txtExtraCost.setColumns(10);
+		
+		JLabel lblExtraCost = new JLabel("Extra Cost:");
+		lblExtraCost.setBounds(206, 277, 62, 14);
+		contentPane.add(lblExtraCost);
 		
 		
 		

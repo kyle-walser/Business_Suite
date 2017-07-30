@@ -1,2 +1,2 @@
-EB1,JACKBOUT,New,53.35,7LBS,bill,Retail Arbitrage,25.36,02/02/2002,07/15/2017,
+EB1,JACKBOUT,New,53.35,7LBS,bill,Retail Arbitrage,25.36,02/02/2002,07/15/2017,Sold
 EB2,THIF,Used,53.6,9OZS,jil,Online Arbitrage,53.96,02/02/2002,07/15/2017,
