@@ -48,7 +48,7 @@ public class amazon_Home extends JFrame {
 		contentPane.setLayout(null);
 		
 		JComboBox cmboService = new JComboBox();
-		cmboService.setModel(new DefaultComboBoxModel(new String[] {"Choose...", "Listing", "Shipping", "Returns"}));
+		cmboService.setModel(new DefaultComboBoxModel(new String[] {"Listing", "Shipping", "Returns"}));
 		cmboService.setBounds(147, 53, 80, 20);
 		contentPane.add(cmboService);
 		
@@ -90,7 +90,7 @@ public class amazon_Home extends JFrame {
 				}
 			}
 		});
-		btnContinue.setBounds(138, 96, 89, 23);
+		btnContinue.setBounds(138, 95, 89, 23);
 		contentPane.add(btnContinue);
 		
 		JButton btnBack = new JButton("Back");

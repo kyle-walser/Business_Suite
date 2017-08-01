@@ -6,6 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JMenuBar;
+import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+import javax.swing.JRadioButton;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class amazon_Listing extends JFrame {
 
@@ -31,12 +40,46 @@ public class amazon_Listing extends JFrame {
 	 * Create the frame.
 	 */
 	public amazon_Listing() {
+		JRadioButton rdbtnMerchant = new JRadioButton("Merchant");
+		JRadioButton rdbtnFba = new JRadioButton("FBA");
+		
+		setTitle("Amazon Listing Screen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 450);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+	
+		rdbtnMerchant.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rdbtnFba.setSelected(false);
+				rdbtnMerchant.setEnabled(false);
+				rdbtnFba.setEnabled(true);
+				
+			}
+		});
+		rdbtnMerchant.setBounds(225, 7, 109, 23);
+		contentPane.add(rdbtnMerchant);
+		
+		
+		rdbtnFba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rdbtnMerchant.setSelected(false);
+				rdbtnFba.setEnabled(false);
+				rdbtnMerchant.setEnabled(true);
+			}
+		});
+		rdbtnFba.setBounds(225, 33, 109, 23);
+		contentPane.add(rdbtnFba);
+		
+		JLabel lblNewLabel = new JLabel("Choose fullfillment option:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(10, 16, 209, 14);
+		contentPane.add(lblNewLabel);
 	}
-
 }
