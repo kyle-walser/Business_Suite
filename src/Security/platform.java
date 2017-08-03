@@ -77,6 +77,7 @@ public class platform extends JFrame {
 		lblPlatform.setBounds(139, 70, 90, 20);
 		contentPane.add(lblPlatform);
 		
+		
 		JButton cont_btn = new JButton("Continue");
 		cont_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
