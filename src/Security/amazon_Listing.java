@@ -15,10 +15,13 @@ import javax.swing.JRadioButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
 
 public class amazon_Listing extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField txtTitle;
 
 	/**
 	 * Launch the application.
@@ -81,5 +84,18 @@ public class amazon_Listing extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel.setBounds(10, 16, 209, 14);
 		contentPane.add(lblNewLabel);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 65, 564, 2);
+		contentPane.add(separator);
+		
+		txtTitle = new JTextField();
+		txtTitle.setBounds(91, 78, 209, 20);
+		contentPane.add(txtTitle);
+		txtTitle.setColumns(10);
+		
+		JLabel lblName = new JLabel("Name:");
+		lblName.setBounds(20, 81, 46, 14);
+		contentPane.add(lblName);
 	}
 }
